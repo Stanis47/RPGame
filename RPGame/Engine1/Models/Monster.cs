@@ -32,7 +32,7 @@ namespace Engine.Models
             int rewardExperiencePoints, int rewardGold)
         {
             this.Name = name;
-            this.ImageName = String.Format("/Engine1;component/Images/Monsters/{0}", imageName);
+            this.ImageName = String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Monsters\{0}", imageName);
             this.MaximumHitPoints = maxHitPoints;
             this.HitPoints = hitPoints;
             this.RewardExperiencePoints = rewardExperiencePoints;

@@ -34,9 +34,15 @@
     <Content Include="Images\Locations\TownGate.png" />
     <Content Include="Images\Locations\TownSquare.png" />
     <Content Include="Images\Locations\Trader.png" />
-    <Content Include="Images\Monsters\GiantSpider.png" />
-    <Content Include="Images\Monsters\Rat.png" />
-    <Content Include="Images\Monsters\Snake.png" />
+    <Content Include="Images\Monsters\GiantSpider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Monsters\Rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Monsters\Snake.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

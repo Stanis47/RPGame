@@ -1,4 +1,5 @@
-﻿using Engine.Factories;
+﻿using Engine.EventArgs;
+using Engine.Factories;
 using Engine.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,17 @@ namespace Engine.ViewModels
 {
     public class GameSession : BaseNotificationClass
     {
-        private Location _currentLocation;
+        public event EventHandler<GameMessageEventArgs> OnMessageRaised;
 
+        #region Properties
+
+        private Location _currentLocation;
+        private Monster _currentMonster;
+
+        public World CurrentWorld { get; set; }
         public Player CurrentPlayer { get; set; }
+        public Weapon CurrentWeapon { get; set; }
+
         public Location CurrentLocation
         {
             get => _currentLocation;
@@ -27,9 +36,29 @@ namespace Engine.ViewModels
                 OnPropertyChanged(nameof(HasLocationToSouth));
 
                 GivePlayerQuestAtLocation();
+                GetMonsterAtLocation();
             }
         }
-        public World CurrentWorld { get; set; }
+        
+        public Monster CurrentMonster
+        {
+            get => _currentMonster;
+            set
+            {
+                _currentMonster = value;
+
+                OnPropertyChanged(nameof(CurrentMonster));
+                OnPropertyChanged(nameof(HasMonster));
+
+                if(CurrentMonster != null)
+                {
+                    RaiseMessage("");
+                    RaiseMessage($"You see a {CurrentMonster.Name} here!");
+                }
+            }
+        }
+
+        public bool HasMonster => CurrentMonster != null;
 
         public bool HasLocationToNorth
         {
@@ -51,6 +80,7 @@ namespace Engine.ViewModels
             get => CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1) != null;
         }
 
+        #endregion
 
         public GameSession()
         {
@@ -67,10 +97,6 @@ namespace Engine.ViewModels
             CurrentWorld = WorldFactory.CreateWorld();
 
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
-
-            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
-            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
-            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1002));
         }
 
         public void MoveNorth()
@@ -106,6 +132,16 @@ namespace Engine.ViewModels
                     CurrentPlayer.Quests.Add(new QuestStatus(quest));
                 }
             }
+        }
+
+        private void GetMonsterAtLocation()
+        {
+            CurrentMonster = CurrentLocation.GetMonster();
+        }
+
+        private void RaiseMessage(string message)
+        {
+            OnMessageRaised?.Invoke(this, new GameMessageEventArgs(message));
         }
     }
 }
