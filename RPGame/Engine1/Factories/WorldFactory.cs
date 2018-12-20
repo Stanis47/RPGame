@@ -13,45 +13,45 @@ namespace Engine.Factories
 
             newWorld.AddLocation(-2, -1, "Farmer's Field",
                 "There are rows of corn growing here, with giant rats hiding between them.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\FarmFields.png");
+                "FarmFields.png");
 
             newWorld.LocationAt(-2, -1).AddMonster(2, 100);
 
             newWorld.AddLocation(-1, -1, "Farmer's House",
                 "This is the house of your neighbor, Farmer Ted.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\Farmhouse.png");
+                "Farmhouse.png");
 
             newWorld.AddLocation(0, -1, "Home",
                 "This is your home",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\Home.png");
+                "Home.png");
 
             newWorld.AddLocation(-1, 0, "Trading Shop",
                 "The shop of Susan, the trader.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\Trader.png");
+                "Trader.png");
 
             newWorld.AddLocation(0, 0, "Town square",
                 "You see a fountain here.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\TownSquare.png");
+                "TownSquare.png");
 
             newWorld.AddLocation(1, 0, "Town Gate",
                 "There is a gate here, protecting the town from giant spiders.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\TownGate.png");
+                "TownGate.png");
 
             newWorld.AddLocation(2, 0, "Spider Forest",
                 "The trees in this forest are covered with spider webs.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\SpiderForest.png");
+                "SpiderForest.png");
 
             newWorld.LocationAt(2, 0).AddMonster(3, 100);
 
             newWorld.AddLocation(0, 1, "Herbalist's hut",
                 "You see a small hut, with plants drying from the roof.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\HerbalistsHut.png");
+                "HerbalistsHut.png");
 
             newWorld.LocationAt(0, 1).QuestsAvailableHere.Add(QuestFactory.GetQuestByID(1));
 
             newWorld.AddLocation(0, 2, "Herbalist's garden",
                 "There are many plants here, with snakes hiding behind them.",
-                @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\HerbalistsGarden.png");
+                "HerbalistsGarden.png");
 
             newWorld.LocationAt(0, 2).AddMonster(1, 100);
 

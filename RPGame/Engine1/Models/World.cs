@@ -16,7 +16,7 @@ namespace Engine.Models
                 YCoordinate = yCoordinate,
                 Name = name,
                 Description = description,
-                ImageName = imageName
+                ImageName = String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\{0}", imageName)
             };
 
             _locations.Add(location);
