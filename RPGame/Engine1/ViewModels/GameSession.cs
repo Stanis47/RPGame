@@ -63,18 +63,13 @@ namespace Engine.ViewModels
                 Gold = 100
             };
 
-            CurrentLocation = new Location
-            {
-                Name = "Home",
-                XCoordinate = 0,
-                YCoordinate = -1,
-                Description = "This is your house",
-                ImageName = @"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\Home.png"
-            };
-
             CurrentWorld = WorldFactory.CreateWorld();
 
             CurrentLocation = CurrentWorld.LocationAt(0, 0);
+
+            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
+            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
+            CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1002));
         }
 
         public void MoveNorth()
