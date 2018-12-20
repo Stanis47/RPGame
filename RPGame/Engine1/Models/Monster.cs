@@ -22,6 +22,9 @@ namespace Engine.Models
             }
         }
 
+        public int MinimumDamage { get; set; }
+        public int MaximumDamage { get; set; }
+
         public int RewardExperiencePoints { get; private set; }
         public int RewardGold { get; private set; }
 
@@ -29,12 +32,15 @@ namespace Engine.Models
 
         public Monster(string name, string imageName,
             int maxHitPoints, int hitPoints,
+            int minimumDamage, int maximumDamage,
             int rewardExperiencePoints, int rewardGold)
         {
             this.Name = name;
             this.ImageName = String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Monsters\{0}", imageName);
             this.MaximumHitPoints = maxHitPoints;
             this.HitPoints = hitPoints;
+            this.MinimumDamage = minimumDamage;
+            this.MaximumDamage = maximumDamage;
             this.RewardExperiencePoints = rewardExperiencePoints;
             this.RewardGold = rewardGold;
 
