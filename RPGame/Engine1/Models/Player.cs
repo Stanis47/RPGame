@@ -7,26 +7,14 @@ using System.Linq;
 
 namespace Engine.Models
 {
-    public class Player : BaseNotificationClass
+    public class Player : LivingEntity
     {
         #region Properties
 
-        private string _name;
         private string _class;
-        private int _hitPoints;
         private int _level;
         private int _experiencePoints;
-        private int _gold;
 
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
         public string Class
         {
             get => _class;
@@ -36,15 +24,7 @@ namespace Engine.Models
                 OnPropertyChanged(nameof(Class));
             }
         }
-        public int HitPoints
-        {
-            get => _hitPoints;
-            set
-            {
-                _hitPoints = value;
-                OnPropertyChanged(nameof(HitPoints));
-            }
-        }
+
         public int Level
         {
             get => _level;
@@ -63,42 +43,19 @@ namespace Engine.Models
                 OnPropertyChanged(nameof(ExperiencePoints));
             }
         }
-        public int Gold
-        {
-            get => _gold;
-            set
-            {
-                _gold = value;
-                OnPropertyChanged(nameof(Gold));
-            }
-        }
-
-        public ObservableCollection<GameItem> Inventory { get; set; }
-
-        public List<GameItem> Weapons => Inventory.Where(i => i is Weapon).ToList();
 
         public ObservableCollection<QuestStatus> Quests { get; set; }
 
         #endregion
 
-        public Player()
+        public Player(string name, string characterClass, int experiencePoints,
+            int maximumHiPoints, int currentHitPoints, int gold) : 
+            base(name, maximumHiPoints, currentHitPoints, gold)
         {
-            Inventory = new ObservableCollection<GameItem>();
+            Class = characterClass;
+            ExperiencePoints = experiencePoints;
+
             Quests = new ObservableCollection<QuestStatus>();
-        }
-
-        public void AddItemToInventory(GameItem item)
-        {
-            Inventory.Add(item);
-
-            OnPropertyChanged(nameof(Weapons));
-        }
-
-        public void RemoveItemFromInventory(GameItem item)
-        {
-            Inventory.Remove(item);
-
-            OnPropertyChanged(nameof(Weapons));
         }
 
         public bool HasAllTheseItems(List<ItemQuantity> items)
