@@ -12,6 +12,7 @@ namespace Engine.Models
         private int _maximumHitPoints;
         private int _gold;
         private int _level;
+        private GameItem _currentWeapon;
 
         #region Properties
 
@@ -65,6 +66,27 @@ namespace Engine.Models
             }
         }
 
+        public GameItem CurrentWeapon
+        {
+            get => _currentWeapon;
+            set
+            {
+                if(_currentWeapon != null)
+                {
+                    _currentWeapon.Action.OnActionPerformed -= RaiseActionPerformedEvent;
+                }
+
+                _currentWeapon = value;
+
+                if(_currentWeapon != null)
+                {
+                    _currentWeapon.Action.OnActionPerformed += RaiseActionPerformedEvent;
+                }
+
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<GameItem> Inventory { get; }
 
         public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; }
@@ -75,6 +97,7 @@ namespace Engine.Models
 
         #endregion
 
+        public event EventHandler<string> OnActionPerformed;
         public event EventHandler OnKillded;
 
         protected LivingEntity(string name, int maximumHitPoints, int currentHitPoints, int gold, int level = 1)
@@ -90,6 +113,11 @@ namespace Engine.Models
         }
 
         #region Public functions
+
+        public void UseCurrentWeaponOn(LivingEntity target)
+        {
+            CurrentWeapon.PerformAction(this, target);
+        }
 
         public void TakeDamage(int hitPointsOfDamage)
         {
@@ -183,6 +211,11 @@ namespace Engine.Models
         private void RaiseOnKilledEvent()
         {
             OnKillded?.Invoke(this, new System.EventArgs());
+        }
+
+        private void RaiseActionPerformedEvent(object sender, string result)
+        {
+            OnActionPerformed?.Invoke(this, result);
         }
 
         #endregion
