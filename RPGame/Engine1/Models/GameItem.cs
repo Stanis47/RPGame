@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Engine.Models
+﻿namespace Engine.Models
 {
     public class GameItem
     {
-        public int ItemTypeID { get; set; }
-        public string Name { get; set; }
-        public int Price { get; set; }
-        public bool IsUnique { get; set; }
+        public int ItemTypeID { get; }
+        public string Name { get; }
+        public int Price { get; }
+        public bool IsUnique { get; }
 
         public GameItem(int itemTypeID, string name, int price, bool isUnique = false)
         {

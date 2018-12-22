@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace Engine.Models
 {
@@ -12,52 +11,63 @@ namespace Engine.Models
         private int _currentHitPoints;
         private int _maximumHitPoints;
         private int _gold;
+        private int _level;
 
         #region Properties
 
         public string Name
         {
             get => _name;
-            set
+            private set
             {
                 _name = value;
-                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged();
             }
         }
 
         public int CurrentHitPoints
         {
             get => _currentHitPoints;
-            set
+            private set
             {
                 _currentHitPoints = value;
-                OnPropertyChanged(nameof(CurrentHitPoints));
+                OnPropertyChanged();
             }
         }
 
         public int MaximumHitPoints
         {
             get => _maximumHitPoints;
-            set
+            protected set
             {
                 _maximumHitPoints = value;
-                OnPropertyChanged(nameof(MaximumHitPoints));
+                OnPropertyChanged();
             }
         }
 
         public int Gold
         {
             get => _gold;
-            set
+            private set
             {
                 _gold = value;
-                OnPropertyChanged(nameof(Gold));
+                OnPropertyChanged();
             }
         }
 
-        public ObservableCollection<GameItem> Inventory { get; set; }
+        public int Level
+        {
+            get => _level;
+            protected set
+            {
+                _level = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; set; }
+        public ObservableCollection<GameItem> Inventory { get; }
+
+        public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; }
 
         public List<GameItem> Weapons => Inventory.Where(i => i is Weapon).ToList();
 
@@ -67,12 +77,13 @@ namespace Engine.Models
 
         public event EventHandler OnKillded;
 
-        protected LivingEntity(string name, int maximumHitPoints, int currentHitPoints, int gold)
+        protected LivingEntity(string name, int maximumHitPoints, int currentHitPoints, int gold, int level = 1)
         {
             Name = name;
             MaximumHitPoints = maximumHitPoints;
             CurrentHitPoints = currentHitPoints;
             Gold = gold;
+            Level = level;
 
             Inventory = new ObservableCollection<GameItem>();
             GroupedInventory = new ObservableCollection<GroupedInventoryItem>();

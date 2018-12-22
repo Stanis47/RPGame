@@ -2,10 +2,7 @@
 using Engine.Factories;
 using Engine.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
 namespace Engine.ViewModels
 {
@@ -20,7 +17,7 @@ namespace Engine.ViewModels
         private Monster _currentMonster;
         private Trader _currentTrader;
 
-        public World CurrentWorld { get; set; }
+        public World CurrentWorld { get; }
 
         public Player CurrentPlayer
         {
@@ -30,6 +27,7 @@ namespace Engine.ViewModels
                 if(_currentPlayer != null)
                 {
                     _currentPlayer.OnKillded -= OnCurrentPlayerKilled;
+                    _currentPlayer.OnLevelUp -= OnCurrentPlayerLeveledUp;
                 }
 
                 _currentPlayer = value;
@@ -37,6 +35,7 @@ namespace Engine.ViewModels
                 if(_currentPlayer != null)
                 {
                     _currentPlayer.OnKillded += OnCurrentPlayerKilled;
+                    _currentPlayer.OnLevelUp += OnCurrentPlayerLeveledUp;
                 }
             }
         }
@@ -50,7 +49,7 @@ namespace Engine.ViewModels
             {
                 _currentLocation = value;
 
-                OnPropertyChanged(nameof(CurrentLocation));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(HasLocationToNorth));
                 OnPropertyChanged(nameof(HasLocationToWest));
                 OnPropertyChanged(nameof(HasLocationToEast));
@@ -84,7 +83,7 @@ namespace Engine.ViewModels
                     RaiseMessage($"You see a {CurrentMonster.Name} here!");
                 }
 
-                OnPropertyChanged(nameof(CurrentMonster));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(HasMonster));
             }
         }
@@ -96,7 +95,7 @@ namespace Engine.ViewModels
             {
                 _currentTrader = value;
 
-                OnPropertyChanged(nameof(CurrentTrader));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(HasTrader));
             }
         }
@@ -188,18 +187,18 @@ namespace Engine.ViewModels
                         RaiseMessage("");
                         RaiseMessage($"You completed the '{quest.Name}' quest.");
 
-                        CurrentPlayer.ExperiencePoints += quest.RewardExperiencePoints;
                         RaiseMessage($"You receive {quest.RewardExperiencePoints} experience points.");
+                        CurrentPlayer.AddExperience(quest.RewardExperiencePoints);
 
-                        CurrentPlayer.Gold += quest.RewardGold;
                         RaiseMessage($"You receive {quest.RewardGold} gold.");
+                        CurrentPlayer.ReceiveGold(quest.RewardGold);    
 
                         foreach (ItemQuantity itemQuantity in quest.RewardItems)
                         {
                             GameItem rewardItem = ItemFactory.CreateGameItem(itemQuantity.ItemID);
 
-                            CurrentPlayer.AddItemToInventory(rewardItem);
                             RaiseMessage($"You receive a {rewardItem.Name}.");
+                            CurrentPlayer.AddItemToInventory(rewardItem);          
                         }
 
                         questsToComplete.IsCompleted = true;
@@ -300,16 +299,21 @@ namespace Engine.ViewModels
             RaiseMessage($"You defeated the {CurrentMonster.Name}!");
 
             RaiseMessage($"You receive {CurrentMonster.RewardExperiencePoints} experience points.");
-            CurrentPlayer.ExperiencePoints += CurrentMonster.RewardExperiencePoints;
+            CurrentPlayer.AddExperience(CurrentMonster.RewardExperiencePoints);
 
             RaiseMessage($"You receive {CurrentMonster.Gold} gold.");
-            CurrentPlayer.Gold += CurrentMonster.Gold;
+            CurrentPlayer.ReceiveGold(CurrentMonster.Gold);
 
             foreach(GameItem gameItem in CurrentMonster.Inventory)
             {
                 RaiseMessage($"You receive one {gameItem.Name}.");
                 CurrentPlayer.AddItemToInventory(gameItem);
             }
+        }
+
+        private void OnCurrentPlayerLeveledUp(object sender, System.EventArgs eventArgs)
+        {
+            RaiseMessage($"You are now level {CurrentPlayer.Level}!");
         }
 
         private void RaiseMessage(string message)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Engine.Models
 {
@@ -8,18 +7,11 @@ namespace Engine.Models
     {
         private List<Location> _locations = new List<Location>();
 
-        internal void AddLocation(int xCoordinate, int yCoordinate, string name, string description, string imageName)
+        internal void AddLocation(int xCoordinate, int yCoordinate,
+            string name, string description, string imageName)
         {
-            Location location = new Location()
-            {
-                XCoordinate = xCoordinate,
-                YCoordinate = yCoordinate,
-                Name = name,
-                Description = description,
-                ImageName = String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\{0}", imageName)
-            };
-
-            _locations.Add(location);
+            _locations.Add(new Location(xCoordinate, yCoordinate, name, description,
+                String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\{0}", imageName)));
         }
 
         public Location LocationAt(int xCoordinate, int yCoordinate)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -12,7 +10,6 @@ namespace Engine.Models
         #region Properties
 
         private string _class;
-        private int _level;
         private int _experiencePoints;
 
         public string Class
@@ -21,32 +18,27 @@ namespace Engine.Models
             set
             {
                 _class = value;
-                OnPropertyChanged(nameof(Class));
+                OnPropertyChanged();
             }
         }
 
-        public int Level
-        {
-            get => _level;
-            set
-            {
-                _level = value;
-                OnPropertyChanged(nameof(Level));
-            }
-        }
         public int ExperiencePoints
         {
             get => _experiencePoints ;
-            set
+            private set
             {
                 _experiencePoints = value;
-                OnPropertyChanged(nameof(ExperiencePoints));
+                OnPropertyChanged();
+
+                SetLevelAndMaximumHitPoints();
             }
         }
 
-        public ObservableCollection<QuestStatus> Quests { get; set; }
+        public ObservableCollection<QuestStatus> Quests { get; }
 
         #endregion
+
+        public event EventHandler OnLevelUp;
 
         public Player(string name, string characterClass, int experiencePoints,
             int maximumHiPoints, int currentHitPoints, int gold) : 
@@ -69,6 +61,25 @@ namespace Engine.Models
             }
 
             return true;
+        }
+
+        public void AddExperience(int experiencePoints)
+        {
+            ExperiencePoints += experiencePoints;
+        }
+
+        private void SetLevelAndMaximumHitPoints()
+        {
+            int originalLevel = Level;
+
+            Level = (ExperiencePoints / 100) + 1;
+
+            if(Level != originalLevel)
+            {
+                MaximumHitPoints = Level * 10;
+
+                OnLevelUp?.Invoke(this, System.EventArgs.Empty);
+            }
         }
     }
 }

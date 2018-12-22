@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Engine.Models
 {
     public class Monster : LivingEntity
     {
-        public string ImageName { get; set; }
-        public int MinimumDamage { get; set; }
-        public int MaximumDamage { get; set; }
+        public string ImageName { get; }
+        public int MinimumDamage { get; }
+        public int MaximumDamage { get; }
 
-        public int RewardExperiencePoints { get; private set; }
+        public int RewardExperiencePoints { get; }
 
         public Monster(string name, string imageName,
             int maximumHitPoints, int currentHitPoints,
