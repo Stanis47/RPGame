@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GameData\GameItems.xml" />
     <None Remove="Images\Locations\FarmFields.png" />
     <None Remove="Images\Locations\Farmhouse.png" />
     <None Remove="Images\Locations\HerbalistsGarden.png" />
@@ -21,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="GameData\GameItems.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Locations\FarmFields.png" />
     <Content Include="Images\Locations\Farmhouse.png" />
     <Content Include="Images\Locations\HerbalistsGarden.png" />

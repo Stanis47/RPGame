@@ -171,14 +171,14 @@
                               HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Description"
-                                                Binding="{Binding Item.Name}"
+                                                Binding="{Binding Item.Name, Mode=OneWay}"
                                                 Width="*"/>
                             <DataGridTextColumn Header="Qty"
                                                 IsReadOnly="True"
-                                                Binding="{Binding Quantity}"
+                                                Binding="{Binding Quantity, Mode=OneWay}"
                                                 Width="Auto"/>
                             <DataGridTextColumn Header="Price"
-                                                Binding="{Binding Item.Price}"
+                                                Binding="{Binding Item.Price, Mode=OneWay}"
                                                 Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -191,10 +191,10 @@
                               HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name"
-                                                Binding="{Binding PlayerQuest.Name}"
+                                                Binding="{Binding PlayerQuest.Name, Mode=OneWay}"
                                                 Width="*"/>
                             <DataGridTextColumn Header="Done?"
-                                                Binding="{Binding IsCompleted}"
+                                                Binding="{Binding IsCompleted, Mode=OneWay}"
                                                 Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -207,7 +207,7 @@
                               HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name"
-                                                Binding="{Binding Name}"
+                                                Binding="{Binding Name, Mode=OneWay}"
                                                 Width="*"/>
                             <DataGridTemplateColumn MinWidth="75">
                                 <DataGridTemplateColumn.CellTemplate>
