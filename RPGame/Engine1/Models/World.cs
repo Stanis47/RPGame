@@ -7,11 +7,9 @@ namespace Engine.Models
     {
         private List<Location> _locations = new List<Location>();
 
-        internal void AddLocation(int xCoordinate, int yCoordinate,
-            string name, string description, string imageName)
+        internal void AddLocation(Location location)
         {
-            _locations.Add(new Location(xCoordinate, yCoordinate, name, description,
-                String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Locations\{0}", imageName)));
+            _locations.Add(location);
         }
 
         public Location LocationAt(int xCoordinate, int yCoordinate)

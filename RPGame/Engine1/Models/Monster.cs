@@ -13,7 +13,8 @@ namespace Engine.Models
             int rewardExperiencePoints, int gold) :
             base(name, maximumHitPoints, currentHitPoints, gold)
         {
-            ImageName = String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Monsters\{0}", imageName);
+            //ImageName = String.Format(@"C:\Users\Stanis\source\repos\RPGame\RPGame\Engine1\Images\Monsters\{0}", imageName);
+            ImageName = string.Format("/Engine1;component/Images/Monsters/{0}", imageName);
             RewardExperiencePoints = rewardExperiencePoints;
         }
     }
